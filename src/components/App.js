@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import createBrowserHistory from 'history/createBrowserHistory';
 //component
@@ -23,6 +23,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <br/><br/>
         <Router history={history}>
           <div>          
               <Route path="/menu" component={Header}/>
@@ -31,7 +32,7 @@ class App extends Component {
               <Route path="/menu/pageEdit/:id" component={EditContainer} />
               <Route exact path="/login" component={Login}/>
               <Route exact path="/" component={Login}/>         
-            <br/><br/><br/>
+            <br/><br/><br/><br/><br/>
             <Footer/>
           </div>
         </Router>

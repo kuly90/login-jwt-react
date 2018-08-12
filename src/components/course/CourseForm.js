@@ -11,7 +11,7 @@ class CourseForm extends React.Component {
       <form onSubmit={handleSubmit(handleSave)}>
         <div className="container">
           <div className="row col-sm-12">
-            <div class="col-sm-6">
+            <div className="col-sm-6">
               <div className="colum">
                 <Field
                   type="text"
@@ -28,7 +28,7 @@ class CourseForm extends React.Component {
                 />
               </div>
             </div>
-            <div class="col-sm-6">
+            <div className="col-sm-6">
               <div className="colum">
                 <Field
                   type="text"

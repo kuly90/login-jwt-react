@@ -72,11 +72,13 @@ class CourseListContainer extends Component {
 
   handleEditCourse() {
     const id = this.state.id;
-		if (id) {
+    const count = this.state.count
+		if (id && count == 1) {
 			this.setState({ id: undefined });
 			this.props.history.push(`/menu/pageEdit/${id}`, {row: this.state.row});
       this.props.loadGo(this.state.item)
       console.log(this.props.loadGo(this.state.row));
+        
 		}else {
       alert("please choose one item!!!")
     }
