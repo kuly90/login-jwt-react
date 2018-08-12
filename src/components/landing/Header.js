@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import AuthService from '../service/AuthService';
+import withAuth from '../service/withAuth';
 
 const Auth = new AuthService();
 
@@ -11,6 +11,18 @@ const Auth = new AuthService();
     this.props.history.replace('/login');
   }
 
+  handlePageHome(){
+    this.props.history.replace('/menu');
+  }
+
+  handlePageTable(){
+    this.props.history.replace('/menu/PageTable');
+  }
+  
+  handlePageAdd(){
+    this.props.history.replace('/menu/PageAdd');
+  }
+
   render() {
 
     return (
@@ -19,22 +31,20 @@ const Auth = new AuthService();
          <div className="container">
           <div className="collapse navbar-collapse" id="mainNav">
             <div className="navbar-nav">
-              <NavLink className="nav-item nav-link" activeClassName="active" to="/PageTable" >PageTable</NavLink>
-              <NavLink className="nav-item nav-link" activeClassName="active" to="/pageAdd" >PageAdd</NavLink>        
+            <button className="btn btn-primary" onClick={this.handlePageHome.bind(this)}>Home</button>
+            <button className="btn btn-primary" onClick={this.handlePageTable.bind(this)}>List User</button>
+            <button className="btn btn-primary" onClick={this.handlePageAdd.bind(this)}>Add New</button>                 
             </div>
           </div>
         </div>
         <div className="container">
-          <div className="collapse navbar-collapse" id="mainNav">
-            <div className="navbar-nav">
-            
-            </div>
-          </div>
+        </div>
+        <div className="container">         
         </div>
         <div className="container">
           <div className="collapse navbar-collapse" id="mainNav">
             <div className="navbar-nav">
-            <button type="button" className="btn btn-danger" onClick={this.handleLogout.bind(this)}>Logout</button>
+            <button className="btn btn-primary" onClick={this.handleLogout.bind(this)}>Logout</button>
             </div>
           </div>
         </div>
@@ -42,4 +52,4 @@ const Auth = new AuthService();
     )
   }
 }
-export default Header;
+export default withAuth(Header);

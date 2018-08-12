@@ -17,7 +17,7 @@ class AddOrEditCourseContainer extends Component {
 	}
   handleCancel(event) {
 		event.preventDefault();
-		this.props.history.replace('/PageTable');
+		this.props.history.replace('/menu/PageTable');
 	}
 
   generateKey = (numberOfCharacters) => {
@@ -34,7 +34,7 @@ class AddOrEditCourseContainer extends Component {
 			category: values.category
     }
     this.props.InsertItems(newAdd)
-    this.props.history.push('/PageTable');
+    this.props.history.push('/menu/PageTable');
   }
 
   render() {

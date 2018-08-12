@@ -15,12 +15,12 @@ class AddOrEditCourseContainer extends Component {
 	}
   handleCancel(event) {
 		event.preventDefault();
-		this.props.history.replace('/PageTable');
+		this.props.history.replace('/menu/PageTable');
 	}
 
   handleSave(values){
     this.props.EditItemData(values);
-    this.props.history.push('/PageTable');;
+    this.props.history.push('/menu/PageTable');;
   }
 
   render() {

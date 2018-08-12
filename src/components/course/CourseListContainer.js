@@ -28,7 +28,7 @@ class CourseListContainer extends Component {
 
   //Add
   goToPageAdd(){
-    this.props.history.push('/pageAdd');
+    this.props.history.replace('/menu/pageAdd');
   }
 
   handleDelete() {
@@ -74,16 +74,14 @@ class CourseListContainer extends Component {
     const id = this.state.id;
 		if (id) {
 			this.setState({ id: undefined });
-			this.props.history.push(`/pageEdit/${id}`, {row: this.state.row});
+			this.props.history.push(`/menu/pageEdit/${id}`, {row: this.state.row});
       this.props.loadGo(this.state.item)
       console.log(this.props.loadGo(this.state.row));
-		}
+		}else {
+      alert("please choose one item!!!")
+    }
   }
   
-  handleLogout(){
-    Auth.logout()
-    this.props.history.replace('/login');
-  }
 
   render() {
     const { ListData } = this.props;
@@ -118,9 +116,6 @@ class CourseListContainer extends Component {
 
 							<button type="button" className="btn btn-danger ml-2" onClick={()=>this.handleDelete(this.state.id)}>
 								<i className="fa fa-trash-o" aria-hidden="true"/> Delete
-              </button>
-              <button type="button" className="btn btn-success ml-2" onClick={this.handleLogout.bind(this)}>
-								<i className="fa fa-sign-out" aria-hidden="true"/> Logout
               </button>
 						</div>
 					</div>

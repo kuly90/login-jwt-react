@@ -41,7 +41,7 @@ class Login extends Component {
 		e.preventDefault();
 		this.Auth.login(this.state.username, this.state.password)
 			.then(res => {
-				this.props.history.replace('/PageTable')
+				this.props.history.replace('/menu')
 			})
 		
 			.catch(err => {

@@ -24,15 +24,13 @@ class App extends Component {
     return (
       <div>
         <Router history={history}>
-          <div>
-            <Header/>
-            <Switch>
-              <Route path="/PageTable" component={CourseListContainer}/>
-              <Route exact path="/pageAdd" component={AddOrEditCourseContainer} />
-              <Route path="/pageEdit/:id" component={EditContainer} />
-              <Route path="/login" component={Login}/>
-              <Route path="/" component={Login}/>
-            </Switch>
+          <div>          
+              <Route path="/menu" component={Header}/>
+              <Route path="/menu/PageTable" component={CourseListContainer}/>
+              <Route path="/menu/pageAdd" component={AddOrEditCourseContainer} />
+              <Route path="/menu/pageEdit/:id" component={EditContainer} />
+              <Route exact path="/login" component={Login}/>
+              <Route exact path="/" component={Login}/>         
             <br/><br/><br/>
             <Footer/>
           </div>
