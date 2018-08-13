@@ -5,11 +5,7 @@ import CourseList from './CourseList';
 import { deleteitem, EditItemData } from '../../action';
 import { loadGo } from '../../reducer/EditReducer';
 import withAuth from '../service/withAuth';
-import AuthService from '../service/AuthService';
 import _ from 'lodash';
-
-const Auth = new AuthService();
-
 
 class CourseListContainer extends Component {
   constructor(props){
@@ -33,13 +29,18 @@ class CourseListContainer extends Component {
 
   handleDelete() {
     const SelectItem = this.state.SelectItem;
+    const count = this.state.count
     if (SelectItem) {
       this.setState({
         SelectItem: [],
         id: null
       })
       this.props.deleteitem(this.state.SelectItem)
+    } 
+    if(count < 1){
+      alert("Choose Items for delete !!!");
     }
+    
 	}
 
   handleRowSelect(row, isSelected) {

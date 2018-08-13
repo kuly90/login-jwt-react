@@ -25,10 +25,10 @@ class App extends Component {
       <div>
         <br/><br/>
         <Router history={history}>
-          <div>          
+          <div className="container">          
               <Route path="/menu" component={Header}/>
               <Route path="/menu/PageTable" component={CourseListContainer}/>
-              <Route path="/menu/pageAdd" component={AddOrEditCourseContainer} />
+              <Route path="/menu/pageAdd" component={AddOrEditCourseContainer}/>
               <Route path="/menu/pageEdit/:id" component={EditContainer} />
               <Route exact path="/login" component={Login}/>
               <Route exact path="/" component={Login}/>         

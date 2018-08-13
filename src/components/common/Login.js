@@ -7,6 +7,7 @@ class Login extends Component {
 			super();
 			this.handleChange = this.handleChange.bind(this);
 			this.handleFormSubmit = this.handleFormSubmit.bind(this);
+			this.handleError = this.handleError.bind(this);
 			this.Auth = new AuthService();
 	}
 	componentWillMount(){
@@ -18,6 +19,21 @@ class Login extends Component {
 	render() {
 		return (
 			<div className="container">
+				<nav className="navbar navbar-expand-sm bg-primary navbar-dark">
+					<div className="container">
+					<div className="collapse navbar-collapse" id="mainNav">
+					<div className="navbar-nav">
+					<button className="btn btn-primary" onClick={this.handleError} >Home</button>
+					<button className="btn btn-primary" onClick={this.handleError} >List User</button>
+					<button className="btn btn-primary" onClick={this.handleError}>Add New</button>                 
+					</div>
+					</div>
+				</div>
+				<div className="container">
+				</div>
+				<div className="container">         
+				</div>
+				</nav>
 				<h2>LOGIN</h2>
 				<form onSubmit={this.handleFormSubmit}>
 					<div className="form-group">
@@ -57,6 +73,9 @@ class Login extends Component {
 				[e.target.name]: e.target.value
 			}
 		)
+	}
+	handleError(){
+		alert("Please Login First !!!");
 	}
 }
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import FieldInput from '../common/FieldInput';
-// import SelectInput from '../common/SelectInput';
-
 
 class CourseForm extends React.Component {
   render() {
