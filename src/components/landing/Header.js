@@ -23,6 +23,10 @@ const Auth = new AuthService();
     this.props.history.replace('/menu/PageAdd');
   }
 
+  handlePageUser(){
+    this.props.history.replace('/menu/UserList');
+  }
+
   render() {
 
     return (
@@ -32,8 +36,9 @@ const Auth = new AuthService();
           <div className="collapse navbar-collapse" id="mainNav">
             <div className="navbar-nav">
             <button className="btn btn-primary" onClick={this.handlePageHome.bind(this)}>Home</button>
-            <button className="btn btn-primary" onClick={this.handlePageTable.bind(this)}>List User</button>
-            <button className="btn btn-primary" onClick={this.handlePageAdd.bind(this)}>Add New</button>                 
+            <button className="btn btn-primary" onClick={this.handlePageTable.bind(this)}>List Product</button>
+            <button className="btn btn-primary" onClick={this.handlePageAdd.bind(this)}>Add New</button> 
+            <button className="btn btn-primary" onClick={this.handlePageUser.bind(this)}>List User</button>                
             </div>
           </div>
         </div>
