@@ -1,5 +1,5 @@
 
-drop database if exists usermanager;
+drop database if exists userManager;
 create database userManager;
 use userManager;
 

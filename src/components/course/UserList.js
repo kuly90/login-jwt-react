@@ -1,98 +1,103 @@
 import React from 'react';
 
-class UserList extends React.Component{
-state = {
-    users:[], 
-    user: {
-        username: 'user name',
-        password: 'password'
-    
+class UserList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            item: {},
+            user: {
+                username: 'user name',
+                password: 'password'
+            },
+            users: [],
+        }
     }
-}
-componentDidMount(){
-    this.getUsers();
-}
+    componentDidMount() {
+        this.getUsers();
+    }
 
-getUsers = _ => {
-    fetch('http://localhost:8080/users')
-    .then(response =>response.json())
-    .then(response => this.setState({users: response.data}))
-    .catch(err => console.error(err))    
-}
+    getUsers = _ => {
+        fetch('http://localhost:8080/users')
+            .then(response => response.json())
+            .then(response => this.setState({ users: response.data }))
+            .catch(err => console.error(err))
+    }
 
-addUser = _=> {
-    const { user } = this.state;
-    fetch(`http://localhost:8080/users/add?username=${user.username}&password=${user.password}`)
-    .then(this.getUsers)
-    .catch(err => console.error(err))
-    
-}
+    addUser = _ => {
+        const { user } = this.state;
+        fetch(`http://localhost:8080/users/add?username=${user.username}&password=${user.password}`)
+            .then(this.getUsers)
+            .catch(err => console.error(err))
+    }
 
- deleteUser = _=> {
-    const id = this.refs.txt.value;
-    alert(id);
-    fetch(`http://localhost:8080/users/deleteUser?id=${id}`)
-    .then(this.getUsers)
-    .catch(err => console.error(err)
-    )
-}
+    deleteUser (item) {
+        const id = item.id;
+        fetch(`http://localhost:8080/users/deleteUser?id=${id}`)  
+            .then(this.getUsers)         
+            .catch(err => console.error(err)
+            )
+    }
 
-editUser = _ => {
-    alert('edit')
-}
+    editUser (item) {
+        const id = item.id;
+        console.log(id);       
+         this.props.history.replace(`/EditUser/:${id}`, item);
+        
+    }
 
-
-renderUser = ({id, username, password}) => 
-    
-    <div key={id}>
-      <table className="table table-hover">
-        <thead>
-        <tr>
-            <th>user Id</th>
-            <th>user name</th>
-            <th>password</th>
-            <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td  ref="txt">{id}</td>
-                <td>{username}</td>
-                <td>{password}</td>
-                <td>
-                    <button className="btn btn-primary " onClick={this.editUser}> 
-                       <span className="fa fa-pencil fa-fw"></span>
-                    </button>
-                </td>
-                <td>
-                    <button className="btn btn-danger" onClick={this.deleteUser}>    
-                        <span className="fa fa-trash-o fa-fw"></span>
-                    </button>
-                </td>
-                
-            </tr>       
-        </tbody>
-     </table>      
-    </div>
-
-    render(){
+    render() {
         const { users, user } = this.state;
-        return(
+        return (
             <div className="App">
-                {users.map(this.renderUser)}
-                
-                <div>
-                    <form className="form-inline" onSubmit={this.addUser}>
+            <br/>
+                 <div>
+                    <div className="form-inline">
                         <input type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder={user.username}
-                            onChange={e => this.setState({ user: {...user,username: e.target.value}})}
+                            onChange={e => this.setState({ user: { ...user, username: e.target.value } })}
                         />
                         <input type="text" className="form-control" id="inlineFormInputGroup" placeholder={user.password}
-                            onChange={e => this.setState({ user: {...user,password: e.target.value}})}
-                        /> &nbsp;                   
-                         <button type="submit" className="btn btn-primary">Add New</button>
-                    </form>
-                    
+                            onChange={e => this.setState({ user: { ...user, password: e.target.value } })}
+                        /> &nbsp;
+                         <button onClick={this.addUser} className="btn btn-primary">
+                         <i className="fa fa-plus" aria-hidden="true" /> New
+                         </button>
+                    </div>
                 </div>
+                <br/>
+                <div >
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>user Id</th>
+                                <th>user name</th>
+                                <th>password</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                users.map((item, index) =>
+                                    <tr key={index}>
+                                        <td>{item.id}</td>
+                                        <td>{item.username}</td>
+                                        <td>{item.password}</td>
+                                        <td>
+                                            <button className="btn btn-primary " onClick={() => this.editUser(item)}>
+                                                <span className="fa fa-pencil fa-fw"></span>
+                                            </button> &nbsp;
+                                            <button className="btn btn-danger" onClick={()=> this.deleteUser(item)}>
+                                                <span className="fa fa-trash-o fa-fw"></span>
+                                            </button>
+                                        </td>
+                                       
+
+                                    </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
+                </div>
+               
             </div>
         );
     }
