@@ -33,11 +33,11 @@ class App extends Component {
               <Route path="/menu/pageAdd" component={AddOrEditCourseContainer}/>
               <Route path="/menu/pageEdit/:id" component={EditContainer} />
               <Route path="/menu/UserList" component={UserList}/>
-              <Route path="/EditUser/:id" component={EditUser}/>
+              <Route path="/menu/EditUser/:id" component={EditUser}/>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/" component={Login}/>         
-            <br/><br/><br/><br/><br/>
-            <Footer/>
+              <br/><br/><br/><br/><br/>
+              <Footer/>
           </div>
         </Router>
       </div>

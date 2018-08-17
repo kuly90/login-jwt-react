@@ -1,15 +1,18 @@
 import React from 'react';
+import withAuth from '../service/withAuth';
 
 class UserList extends React.Component {
+  
     constructor(props) {
         super(props);
         this.state = {
             item: {},
             user: {
-                username: 'user name',
-                password: 'password'
+                username: '',
+                password: ''
             },
             users: [],
+
         }
     }
     componentDidMount() {
@@ -25,9 +28,14 @@ class UserList extends React.Component {
 
     addUser = _ => {
         const { user } = this.state;
-        fetch(`http://localhost:8080/users/add?username=${user.username}&password=${user.password}`)
+        if(user.username == '' || user.password == ''){
+            alert('please inser username and password !')
+        }else{
+            fetch(`http://localhost:8080/users/add?username=${user.username}&password=${user.password}`)
             .then(this.getUsers)
             .catch(err => console.error(err))
+        }       
+        
     }
 
     deleteUser (item) {
@@ -39,10 +47,8 @@ class UserList extends React.Component {
     }
 
     editUser (item) {
-        const id = item.id;
-        console.log(id);       
-         this.props.history.replace(`/EditUser/:${id}`, item);
-        
+        const id = item.id;     
+        this.props.history.replace(`/menu/EditUser/:${id}`,{item: this.state.item})        
     }
 
     render() {
@@ -52,11 +58,13 @@ class UserList extends React.Component {
             <br/>
                  <div>
                     <div className="form-inline">
-                        <input type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder={user.username}
+                        <input type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="user name"
                             onChange={e => this.setState({ user: { ...user, username: e.target.value } })}
+                            required
                         />
-                        <input type="text" className="form-control" id="inlineFormInputGroup" placeholder={user.password}
+                        <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="password"
                             onChange={e => this.setState({ user: { ...user, password: e.target.value } })}
+                            required
                         /> &nbsp;
                          <button onClick={this.addUser} className="btn btn-primary">
                          <i className="fa fa-plus" aria-hidden="true" /> New
@@ -65,7 +73,7 @@ class UserList extends React.Component {
                 </div>
                 <br/>
                 <div >
-                    <table className="table table-hover">
+                    <table className="table table-active table-hover">
                         <thead>
                             <tr>
                                 <th>user Id</th>
@@ -102,4 +110,4 @@ class UserList extends React.Component {
         );
     }
 }
-export default UserList;
+export default withAuth(UserList);
