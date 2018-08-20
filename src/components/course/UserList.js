@@ -51,7 +51,7 @@ class UserList extends React.Component {
 
     //call Modal Edit user
     replaceModalItem (item) {
-        console.log(item);       
+       console.log(item);       
        this.setState({
         userEdit: item
        }) 
@@ -69,7 +69,7 @@ class UserList extends React.Component {
               .then(this.getUsers)           
               .catch(err => console.error(err))              
           }
-          this.props.history.push('/menu/userList');
+          
     }
 
     render() {
