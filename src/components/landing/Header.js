@@ -26,7 +26,9 @@ const Auth = new AuthService();
   handlePageUser(){
     this.props.history.replace('/menu/UserList');
   }
-
+  handlePageContact(){
+    this.props.history.replace('/menu/Contact');
+  }
   render() {
 
     return (
@@ -38,7 +40,8 @@ const Auth = new AuthService();
             <button className="btn btn-primary" onClick={this.handlePageHome.bind(this)}>Home</button>
             <button className="btn btn-primary" onClick={this.handlePageTable.bind(this)}>List Product</button>
             <button className="btn btn-primary" onClick={this.handlePageAdd.bind(this)}>Add New</button> 
-            <button className="btn btn-primary" onClick={this.handlePageUser.bind(this)}>List User</button>                
+            <button className="btn btn-primary" onClick={this.handlePageUser.bind(this)}>List User</button> 
+            <button className="btn btn-primary" onClick={this.handlePageContact.bind(this)}>Contact Us</button>               
             </div>
           </div>
         </div>

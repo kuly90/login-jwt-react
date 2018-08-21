@@ -10,6 +10,7 @@ import CourseListContainer from './course/CourseListContainer';
 import AddOrEditCourseContainer from './course/AddOrEditCourseContainer';
 import EditContainer from './course/EditContainer';
 import UserList from './course/UserList';
+import Contact from './course/Contact';
 import { FetchDataList } from '../action';
 import Header from './landing/Header';
 import Footer from './landing/Footer';
@@ -32,6 +33,7 @@ class App extends Component {
               <Route path="/menu/pageAdd" component={AddOrEditCourseContainer}/>
               <Route path="/menu/pageEdit/:id" component={EditContainer} />
               <Route path="/menu/UserList" component={UserList}/>
+              <Route path="/menu/Contact" component={Contact}/>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/" component={Login}/>         
               <br/><br/><br/><br/><br/>

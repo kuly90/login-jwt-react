@@ -7,10 +7,14 @@ class UserList extends React.Component {
 		super(props);
 		this.state = {
 			userEdit: [],
+			deleteUser: {
+				username: '',
+				password: ''
+			},
 			username: '',
 			password: '',
 			users: [],
-
+			keySearch: ''
 		}
 	}
 	componentDidMount() {
@@ -39,8 +43,8 @@ class UserList extends React.Component {
 	}
 
 	//delete user from database
-	deleteUser(item) {
-		const id = item.id;
+	deleteUser(deleteUser) {
+		const id = deleteUser.id;
 		fetch(`http://localhost:8080/users/deleteUser?id=${id}`)
 			.then(this.getUsers)
 			.catch(err => console.error(err)
@@ -68,28 +72,44 @@ class UserList extends React.Component {
 		}
 	}
 
+	//call Modal Edit user
+	confirmDelete(item) {
+		this.setState({
+			deleteUser: item
+		})
+	}
+
+	//Search User
+	handlerSearch = _ =>{
+		const { keySearch } = this.state;
+		fetch(`http://localhost:8080/users/searchUser?id=${keySearch}&username=${keySearch}`)
+		.then(response => response.json())
+		.then(response => this.setState({ users: response.data }))
+		.catch(err => console.error(err))
+		
+	}
+
 	render() {
-		const { users, userEdit } = this.state;
+		const { users, userEdit, deleteUser } = this.state;
 		return (
 			<div className="App">
 				<br />
-				{/* Add user form */}
-				<div>
-					<div className="form-inline">
-						<input type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="user name"
-							onChange={(e) => this.setState({ username: e.target.value })}
-							required
-						/>
-						<input type="text" className="form-control" id="inlineFormInputGroup" placeholder="password"
-							onChange={(e) => this.setState({ password: e.target.value })}
-							required
-						/> &nbsp;
-                         <button onClick={this.addUser} className="btn btn-primary">
-							<i className="fa fa-plus" aria-hidden="true" /> New
-                         </button>
+				{/* Form search user */}
+				<div className="form-inline">
+					<div>
+						<input type="text" placeholder="input id or username"  className="form-control" style={{width:'300px'}}
+							onChange={(e)=> this.setState({keySearch: e.target.value})}
+						/>&nbsp;
+						<button className="btn btn-primary" onClick={this.handlerSearch}>
+						<i class="fa fa-search"></i>
+						</button>
 					</div>
+					<button className="btn btn-primary" data-toggle="modal" data-target="#myModalAdd" style={{marginLeft:'430px'}}>
+						<i className="fa fa-plus" aria-hidden="true" /> New
+					</button>
 				</div>
 				<br />
+				
 				{/* Table User List*/}
 				<div >
 					<table className="table table-active table-hover">
@@ -113,7 +133,7 @@ class UserList extends React.Component {
 												onClick={() => this.replaceModalItem(item)}>
 												<span className="fa fa-pencil fa-fw"></span>
 											</button> &nbsp;
-                                            <button className="btn btn-danger" onClick={() => this.deleteUser(item)}>
+											<button className="btn btn-danger" data-toggle="modal" data-target="#myModalDelete" onClick={() => this.confirmDelete(item)}>
 												<span className="fa fa-trash-o fa-fw"></span>
 											</button>
 										</td>
@@ -123,6 +143,34 @@ class UserList extends React.Component {
 						</tbody>
 					</table>
 				</div>
+				{/* Modal Add User */}
+				<div className="modal fade" id="myModalAdd">
+					<div className="modal-dialog">
+						<div className="modal-content">
+							<div className="modal-header">
+								<h4 className="modal-title">Add New User</h4>
+								<button type="button" className="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div className="modal-body">
+								<div className="form-inline">
+									<input type="text" className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="user name"
+										onChange={(e) => this.setState({ username: e.target.value })}
+										required
+									/>
+									<input type="text" className="form-control" id="inlineFormInputGroup" placeholder="password"
+										onChange={(e) => this.setState({ password: e.target.value })}
+										required
+									/>
+								</div>
+							</div>
+							<div className="modal-footer">
+								<button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.addUser}>Add</button>
+								<button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				{/* Modal edit User */}
 				<div className="modal fade" id="myModal">
 					<div className="modal-dialog">
@@ -146,6 +194,25 @@ class UserList extends React.Component {
 							<div className="modal-footer">
 								<button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => this.saveUser()}>Save</button>
 								<button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{/* Confirm Delete User */}
+				<div className="modal fade" id="myModalDelete">
+					<div className="modal-dialog">
+						<div className="modal-content">
+							<div className="modal-header">
+								<h6 className="modal-title">
+								<span className="fa fa-exclamation-triangle alert-warning"></span>&nbsp;
+									Do you want to delete user has name is "{deleteUser.username}" ?
+									</h6>
+								<button type="button" className="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div className="modal-footer">
+								<button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => this.deleteUser(deleteUser)}>Yes</button>
+								<button type="button" className="btn btn-danger" data-dismiss="modal">No</button>
 							</div>
 						</div>
 					</div>
