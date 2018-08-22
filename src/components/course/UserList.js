@@ -205,7 +205,7 @@ class UserList extends React.Component {
 						<div className="modal-content">
 							<div className="modal-header">
 								<h6 className="modal-title">
-								<span className="fa fa-exclamation-triangle alert-warning"></span>&nbsp;
+								<span className="fa fa-exclamation-triangle btn-danger"></span>&nbsp;
 									Do you want to delete user has name is "{deleteUser.username}" ?
 									</h6>
 								<button type="button" className="close" data-dismiss="modal">&times;</button>

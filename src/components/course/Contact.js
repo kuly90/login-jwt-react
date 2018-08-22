@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 class Contact extends React.Component{
     constructor(props){
@@ -8,7 +7,9 @@ class Contact extends React.Component{
             name: '',
             email: '',
             subject: '',
-            message: ''
+            message: '',
+            msg: '',
+            msgerror: ''
         }
         this.handlerChange= this.handlerChange.bind(this);
         this.handlerSendEmail= this.handlerSendEmail.bind(this)
@@ -19,11 +20,26 @@ class Contact extends React.Component{
     }
 
    handlerSendEmail = _ =>{
-        const { email, name, subject, message } = this.state;
-        const mailTo = 'tonly01011990@gmail.com'
-        console.log(email,name,subject,message);
-        fetch(`http://localhost:8080/send-email?email=${email}&mailTo=${mailTo}&subject=${subject}&message=${message}`,)
-        .catch(err => console.error(err))
+    const { email, name, subject, message } = this.state;
+       if(email === '' || name === '' || subject ==='' ||message===''){
+           this.setState({
+            msgerror: '(*) is required !!!',
+            msg: ''
+           })
+       }else{
+        this.setState({
+            msg: 'Send message success. Thanks for contact with Us!',
+            msgerror:'',
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+        })       
+         console.log(email,name,subject,message);
+         fetch(`http://localhost:8080/send-email?name=${name}&email=${email}&subject=${subject}&message=${message}`,)
+         .catch(err => console.error(err))
+       }
+      
     }
 
     render(){
@@ -31,33 +47,35 @@ class Contact extends React.Component{
             <div>
                 <div className="container">
                     <h2>Contact Us</h2>
+                    <p style={{color:'green'}}>{this.state.msg}</p>
+                    <p style={{color:'red'}}>{this.state.msgerror}</p>
                     <div style={{ width:'500px'}}>
-                        <form className="form-group">
-                            <label>Email:</label>
-                            <input type="email" className="form-control" placeholder="Enter email" 
+                        <div className="form-group">
+                            <label>Email <span style={{color:'red'}}>*</span></label>
+                            <input type="email" className="form-control" value={this.state.email}
                                     name="email" required onChange={this.handlerChange}
                             />
                         
                         <div className="form-group">
-                            <label>Name:</label>
-                            <input type="text" className="form-control" placeholder="Enter Your Name" 
+                            <label>Name <span style={{color:'red'}}>*</span></label>
+                            <input type="text" className="form-control" value={this.state.name}
                                    name="name" required onChange={this.handlerChange}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Subject:</label>
-                            <input type="text" className="form-control" placeholder="Enter Subject" 
+                            <label>Subject <span style={{color:'red'}}>*</span></label>
+                            <input type="text" className="form-control" value={this.state.subject}
                                    name="subject" required onChange={this.handlerChange}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Message:</label>
-                            <textarea className="form-control" rows="5" placeholder="Enter Message"
+                            <label>Message <span style={{color:'red'}}>*</span></label>
+                            <textarea className="form-control" rows="5" value={this.state.message}
                                      name="message" required onChange={this.handlerChange}
                             />
                         </div>
                         <button type="submit" className="btn btn-primary" onClick={this.handlerSendEmail}>Send</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
